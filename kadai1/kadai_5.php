@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kadai_3</title>
+    <title>kadai_5</title>
 </head>
 <body>
     <form action="" method="post">
@@ -12,7 +12,12 @@
         <input type="submit" value="submit">
     <?php
         if (!empty($_POST["text"])) {
-            echo $_POST['text'];
+            $filePath = './kadai_5.txt';
+            touch($filePath);
+            chmod($filePath, 0666);
+
+            file_put_contents($filePath, $_POST['text']);
+            echo $filePath.'に入力したテキストを書き込みました．';
             }
     ?>
     </form>
