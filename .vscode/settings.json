@@ -1,0 +1,5 @@
+{
+    "kite.completions.disabledFileExtensions": [
+    ".php"
+    ]
+}
