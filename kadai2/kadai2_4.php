@@ -12,8 +12,12 @@
         削除番号：<input type="text" name="delete"> <br>
         <input type="submit" value="送信"> <br>
         <?php
-            $nameFilePath = './name_list.txt';
-            $postNumberFile = './post_number.txt';
+            $nameFilePath = './name_list_2_4.txt';
+            $postNumberFile = './post_number_2_4.txt';
+            if (!file_exists($nameFilePath)) {
+                touch($nameFilePath);
+                chmod($nameFilePath, 0666);
+            }
 
             // 名前フォームが空の時には処理を行わない(一番最初にページを読み込んだ時にエラーが出るのを防ぐため)
             if (!empty($_POST["name"])) {
@@ -23,14 +27,7 @@
                 // 番号管理のためのファイルからと現在の投稿番号を読み込む．
                 $postNumber = (int)file($postNumberFile)[0] + 1;
 
-                if (!file_exists($nameFilePath)) {
-                    touch($nameFilePath);
-                    chmod($nameFilePath, 0666);
-                    file_put_contents($nameFilePath, $postNumber."<>".$name.'<>'.$comment."<>".$date."\n");
-                } else {
-                    file_put_contents($nameFilePath, $postNumber."<>".$name.'<>'.$comment."<>".$date."\n", FILE_APPEND);
-                }
-
+                file_put_contents($nameFilePath, $postNumber."<>".$name.'<>'.$comment."<>".$date."\n", FILE_APPEND);
                 file_put_contents($postNumberFile, $postNumber);
             }
 

@@ -7,8 +7,12 @@
 </head>
 <body>
     <?php // 編集番号フォームが入力された場合に名前とコメントフォームに既存の値を入力するための処理
-        $nameFilePath = './name_list.txt';
-        $postNumberFile = './post_number.txt';
+        $nameFilePath = './name_list_2_5.txt';
+        $postNumberFile = './post_number_2_5.txt';
+        if (!file_exists($nameFilePath)) {
+            touch($nameFilePath);
+            chmod($nameFilePath, 0666);
+        }
         $nameList = file($nameFilePath);
 
         if (!empty($_POST["edit"])) {
@@ -28,7 +32,7 @@
         名前：<input type="text" name="name", value="<?php if (!empty($presentName)) {echo $presentName;}?>"> <br>
         コメント：<input type="text" name="comment", value="<?php if (!empty($presentComment)) {echo $presentComment;}?>"> <br>
         削除番号：<input type="text" name="delete"> <br>
-        編集番号：<input type="text", name="edit"> <input type="hidden" name="edit_No", value="<?php echo $_POST["edit"] ?>"> <br>
+        編集番号：<input type="text", name="edit"> <input type="hidden" name="edit_No", value="<?php if(!empty($_POST["edit"])){echo $_POST["edit"];} ?>"> <br>
         <input type="submit" value="送信"> <br>
         <?php
             $date = date('Y-m-d');
@@ -41,14 +45,7 @@
                 // 番号管理のためのファイルからと現在の投稿番号を読み込む．
                 $postNumber = (int)file($postNumberFile)[0] + 1;
 
-                if (!file_exists($nameFilePath)) {
-                    touch($nameFilePath);
-                    chmod($nameFilePath, 0666);
-                    file_put_contents($nameFilePath, $postNumber."<>".$name.'<>'.$comment."<>".$date."\n");
-                } else {
-                    file_put_contents($nameFilePath, $postNumber."<>".$name.'<>'.$comment."<>".$date."\n", FILE_APPEND);
-                }
-
+                file_put_contents($nameFilePath, $postNumber."<>".$name.'<>'.$comment."<>".$date."\n", FILE_APPEND);
                 file_put_contents($postNumberFile, $postNumber);
             }
 

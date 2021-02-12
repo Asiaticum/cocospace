@@ -11,8 +11,13 @@
         コメント：<input type="text" name="comment"> <br>
         <input type="submit" value="送信"> <br>
         <?php
-            $filePath = './name_list.txt';
-            $postNumber_file = './post_number.txt';
+            $filePath = './name_list_2_3.txt';
+            $postNumber_file = './post_number_2_3.txt';
+
+            if (!file_exists($filePath)) {
+                touch($filePath);
+                chmod($filePath, 0666);
+            }
 
             if (!empty($_POST["name"])) {
                 $name = $_POST["name"];
@@ -21,14 +26,7 @@
                 // 番号管理のためのファイルからと現在の投稿番号を読み込む．
                 $postNumber = (int)file($postNumber_file)[0] + 1;
 
-                if (!file_exists($filePath)) {
-                    touch($filePath);
-                    chmod($filePath, 0666);
-                    file_put_contents($filePath, $postNumber."<>".$name.'<>'.$comment."<>".$date."\n");
-                } else {
-                    file_put_contents($filePath, $postNumber."<>".$name.'<>'.$comment."<>".$date."\n", FILE_APPEND);
-                }
-
+                file_put_contents($filePath, $postNumber."<>".$name.'<>'.$comment."<>".$date."\n", FILE_APPEND);
                 file_put_contents($postNumber_file, $postNumber);
             }
 

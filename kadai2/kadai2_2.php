@@ -11,10 +11,10 @@
         コメント：<input type="text" name="comment"> <br>
         <input type="submit" value="送信">
         <?php
-            $postNumber_file = './post_number.txt';
+            $postNumber_file = './post_number_2_2.txt';
 
             if (!empty($_POST["name"])) {
-                $filePath = './name_list.txt';
+                $filePath = './name_list_2_2.txt';
                 $name = $_POST["name"];
                 $date = date('Y-m-d');
                 $comment = $_POST["comment"];
