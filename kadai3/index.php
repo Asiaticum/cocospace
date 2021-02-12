@@ -7,10 +7,7 @@
 
     <?php
         // MySQLへの接続
-        $host = '127.0.0.1';
-        $username = 'asiaticum';
-        $pw = 'Se19951126';
-        $dbname = 'cocospace';
+        require_once('db_info.php');
         $link = mysqli_connect($host, $username, $pw, $dbname);
         // テーブルが作成されていなければ作成する．
         $makeTable = "create table if not exists bbs(
